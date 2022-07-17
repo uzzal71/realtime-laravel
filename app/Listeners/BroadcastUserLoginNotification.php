@@ -21,7 +21,7 @@ class BroadcastUserLoginNotification
      * Handle the event.
      *
      * @param  object  $event
-     * @return void
+     * @return void 
      */
     public function handle(Login $event)
     {
