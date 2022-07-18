@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\User;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PrivateChannel;
@@ -12,7 +13,7 @@ use Illuminate\Support\Facades\Log;
 
 class UserDeleted implements ShouldBroadcast
 {
-    use Dispatchable, InteractsWithSockets, SerializesModels;
+    use Dispatchable, InteractsWithSockets;
 
     public $user;
 
@@ -32,7 +33,8 @@ class UserDeleted implements ShouldBroadcast
      * @return \Illuminate\Broadcasting\Channel|array
      */
     public function broadcastOn()
-    {        
+    {   
+        Log::debug("Deleted {$this->user->name}");         
         return new Channel('users');
     }
 }

@@ -243,7 +243,7 @@ class UserCreated implements ShouldBroadcast
     }
 }
 ```
-2. app/Events/UserCreated.php files
+2. app/Events/UserUpdated.php files
 ```
 <?php
 
@@ -284,7 +284,7 @@ class UserUpdated implements ShouldBroadcast
     }
 }
 ```
-3. app/Events/UserCreated.php files
+3. app/Events/UserDeleted.php files
 ```
 <?php
 
@@ -295,12 +295,11 @@ use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
-use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
 
 class UserDeleted implements ShouldBroadcast
 {
-    use Dispatchable, InteractsWithSockets, SerializesModels;
+    use Dispatchable, InteractsWithSockets;
 
     public $user;
 
@@ -327,5 +326,49 @@ class UserDeleted implements ShouldBroadcast
 ```
 
 ## 21. Broadcasting the Events Over Users on Realtime
+
+Now Open app/User.php model file
+```
+/**
+ * The event map for the model.
+ *
+ * Allows for object-based events for native Eloquent events.
+ *
+ * @var array
+ */
+protected $dispatchesEvents = [
+    'created' => UserCreated::class,
+    'updated' => UserUpdated::class,
+    'deleted' => UserDeleted::class
+];
+```
+
+Test Events Log
+1. app/Events/UserCreated.php files
+```
+public function broadcastOn()
+{  
+    Log::debug("Created {$this->user->name}");         
+    return new Channel('users');
+}
+```
+
+2. app/Events/UserUpdated.php files
+```
+public function broadcastOn()
+{  
+    Log::debug("Updated {$this->user->name}");      
+    return new Channel('users');
+}
+```
+
+3. app/Events/UserDeleted.php files
+```
+public function broadcastOn()
+{   
+    Log::debug("Deleted {$this->user->name}");         
+    return new Channel('users');
+}
+```
 
 ## 22. Showing the Changes on the Users’ List on Realtime
