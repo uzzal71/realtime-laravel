@@ -250,6 +250,49 @@ Echo.channel("notifications")
 ## 17. Broadcasting the Event Only to Authenticated Users
 
 
+Open app/Events/UserSessionChanged.php and updated
+```
+public function broadcastOn()
+{
+    Log::debug($this->message);
+    Log::debug($this->type);
+    
+    return new PrivateChannel('notifications');
+}
+```
+
+Open resources/js/app.js file and updated
+```
+require('./bootstrap');
+
+Echo.private("notifications")
+    .listen('UserSessionChanged', (e) => {
+        const notificationElement = document.getElementById("notification");
+
+        notificationElement.innerText = e.message;
+        notificationElement.classList.remove('invisible');
+        notificationElement.classList.remove('alert-success');
+        notificationElement.classList.remove('alert-danger');
+
+        notificationElement.classList.add('alert-' + e.type);
+    });
+```
+
+Define chaneels.php notifications route
+```
+use Illuminate\Support\Facades\Broadcast;
+
+Broadcast::channel('notifications', function ($user) {
+    return $user != null;
+});
+```
+
+Open your application terminal
+```
+npm run dev
+php artisan serve
+```
+
 # Section 5: Creating a Realtime API with Laravel
 
 ## 18. Implementing the Actions Over a Resource to Broadcast
