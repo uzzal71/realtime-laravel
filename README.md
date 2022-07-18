@@ -784,3 +784,20 @@ Now Open resources/users/showAll.blade.php
 ## 25. Creating a Command to Broadcast Game Events on Realtime
 
 ## 26. Showing Events to Players in Realtime with Laravel Echo
+
+
+# Section 7: Creating a Chat Room Using Realtime Messages with Laravel Echo
+
+## 27. Creating Visual Components to Send Messages in Realtime
+
+## 28. Managing the List of Connected Users in Realtime
+
+## 29. Creating an Event on Sending Messages in the Chat
+
+## 30. Broadcasting the Event Created When Sending a Message
+
+## 31. Showing the Broadcasted Messages to All Users
+
+
+
+
