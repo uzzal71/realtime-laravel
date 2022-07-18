@@ -115,6 +115,118 @@ class UserSessionChanged implements ShouldBroadcast
 ```
 
 ## 15. Using Laravel Listeners to Broadcast Changes on Users’ Session
+Goto your application terminal
+```
+php artisan make:listener BroadcastUserLoginNotification
+```
+
+Open app/Listeners/BroadcastUserLoginNotification.php file and updated
+
+```
+<?php
+
+namespace App\Listeners;
+
+use App\Events\UserSessionChanged;
+use Illuminate\Auth\Events\Login;
+
+class BroadcastUserLoginNotification
+{
+    /**
+     * Create the event listener.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        //
+    }
+
+    /**
+     * Handle the event.
+     *
+     * @param  object  $event
+     * @return void 
+     */
+    public function handle(Login $event)
+    {
+        broadcast(new UserSessionChanged("{$event->user->name} is online", 'success'));
+    }
+}
+
+```
+
+Another Listener create again goto your application terminal
+```
+php artisan make:listener BroadcastUserLogoutNotification
+```
+
+Open app/Listeners/BroadcastUserLogoutNotification.php file and updated
+
+```
+<?php
+
+namespace App\Listeners;
+
+use App\Events\UserSessionChanged;
+use Illuminate\Auth\Events\Logout;
+
+class BroadcastUserLogoutNotification
+{
+    /**
+     * Create the event listener.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        //
+    }
+
+    /**
+     * Handle the event.
+     *
+     * @param  object  $event
+     * @return void
+     */
+    public function handle(Logout $event)
+    {
+        broadcast(new UserSessionChanged("{$event->user->name} is offline", 'danger'));
+    }
+}
+```
+
+Finaly goto app/Providers/EventServiceProvider.php and define Both Listener
+
+```
+<?php
+
+namespace App\Providers;
+
+use App\Listeners\BroadcastUserLoginNotification;
+use App\Listeners\BroadcastUserLogoutNotification;
+use Illuminate\Auth\Events\Login;
+use Illuminate\Auth\Events\Logout;
+
+class EventServiceProvider extends ServiceProvider
+{
+    /**
+     * The event listener mappings for the application.
+     *
+     * @var array
+     */
+    protected $listen = [
+        Login::class => [
+            BroadcastUserLoginNotification::class
+        ],
+
+        Logout::class => [
+            BroadcastUserLogoutNotification::class
+        ],
+    ];
+}
+
+```
 
 ## 16. Showing the Notification on Realtime Using Laravel Echo
 
