@@ -35,6 +35,14 @@ php artisan migrate
 
 ## 8. Adding Laravel UI and Generating Some Useful Components
 
+Open your application terminal
+```
+composer require laravel/ui
+php artisan ui bootstrap --auth
+```
+
+You can choose Vuejs, Reactjs Or Others.
+
 ## 9. Compiling Some Required Components Using NPM
 
 ## 10. Exploring the Way as Laravel Mix Works in Laravel
