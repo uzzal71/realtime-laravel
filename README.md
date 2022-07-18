@@ -799,5 +799,10 @@ Now Open resources/users/showAll.blade.php
 ## 31. Showing the Broadcasted Messages to All Users
 
 
+# Section 8: Allowing to Send Private Events in Realtime with Laravel Echo
 
+## 32. Adding Components to Allow Events Between Users
 
+## 33. Creating and Broadcasting an Event Using a Private Channel
+
+## 34. Showing the Private Events Only to the Receiver and Sender
