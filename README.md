@@ -62,6 +62,58 @@ Goto resources/views/layouts/app.blade.php
 ```
 ## 14. Creating an Event to Notify Users’ Session Changes
 
+Goto your application terminal
+```
+php artisan make:event UserSessionChanged
+```
+Now goto app/Events/UserSessionChanged.php file and updated
+```
+<?php
+
+namespace App\Events;
+
+use Illuminate\Broadcasting\Channel;
+use Illuminate\Broadcasting\InteractsWithSockets;
+use Illuminate\Broadcasting\PrivateChannel;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Illuminate\Foundation\Events\Dispatchable;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
+
+class UserSessionChanged implements ShouldBroadcast
+{
+    use Dispatchable, InteractsWithSockets, SerializesModels;
+
+    public $message;
+
+    public $type;
+
+    /**
+     * Create a new event instance.
+     *
+     * @return void
+     */
+    public function __construct($message, $type)
+    {
+        $this->message = $message;
+        $this->type = $type;
+    }
+
+    /**
+     * Get the channels the event should broadcast on.
+     *
+     * @return \Illuminate\Broadcasting\Channel|array
+     */
+    public function broadcastOn()
+    {
+        Log::debug($this->message);
+        Log::debug($this->type);
+        
+        return new Channel('notifications');
+    }
+}
+```
+
 ## 15. Using Laravel Listeners to Broadcast Changes on Users’ Session
 
 ## 16. Showing the Notification on Realtime Using Laravel Echo
