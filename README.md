@@ -77,19 +77,47 @@ Again .env file changed
 BROADCAST_DRIVER=pusher
 ```
 
-Finally install php-pusher
+Install php-pusher
 ```
 composer require pusher/pusher-php-server
 ```
 
-Example Version: ^4.1"
+This Time Using Version: ^4.1
 
+Finally
 Now goto config/app.php file and enabled 'BroadcastServiceProvider'. by it is comments
 ```
 App\Providers\BroadcastServiceProvider::class,
 ```
 
 ## 12. Installing and Preparing Laravel Echo to Broadcast Messages
+
+Open your application terminal
+```
+npm install --save-dev laravel-echo pusher-js
+```
+This time using version:
+laravel-echo: "^1.12.1"
+pusher-js: "^5.1.1"
+
+Now open resources/js/bootstrap.js file 
+```
+import Echo from 'laravel-echo'
+
+window.Pusher = require('pusher-js');
+
+window.Echo = new Echo({
+    broadcaster: 'pusher',
+    key: process.env.MIX_PUSHER_APP_KEY,
+    cluster: process.env.MIX_PUSHER_APP_CLUSTER,
+    wsHost: '127.0.0.1',
+    wsPort: 6001,
+    encrypted: false,
+    disableStats: true
+});
+```
+
+By default bootstrap.js file all comments.
 
 # Section 4: Creating Your First Realtime Notifications System with Laravel
 
