@@ -208,6 +208,7 @@ Now, created three Events file
 
 namespace App\Events;
 
+use App\User;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PrivateChannel;
@@ -249,6 +250,7 @@ class UserCreated implements ShouldBroadcast
 
 namespace App\Events;
 
+use App\User;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PrivateChannel;
@@ -290,6 +292,7 @@ class UserUpdated implements ShouldBroadcast
 
 namespace App\Events;
 
+use App\User;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PrivateChannel;
@@ -372,3 +375,49 @@ public function broadcastOn()
 ```
 
 ## 22. Showing the Changes on the Users’ List on Realtime
+
+Now Open resources/users/showAll.blade.php
+```
+
+@push('scripts')
+<script>
+    window.axios.get('/api/users')
+    .then((response) => {
+        const usersElement = document.getElementById('users');
+        let users = response.data;
+
+        users.forEach((user, index) => {
+            let element = document.createElement('li');
+
+            element.setAttribute('id', user.id);
+            element.innerText = user.name;
+
+            usersElement.appendChild(element);
+        });
+    });
+</script>
+
+<script>
+    Echo.channel('users')
+    .listen('UserCreated', (e) => {
+        const usersElement = document.getElementById('users');
+
+        let element = document.createElement('li');
+        element.setAttribute('id', e.user.id);
+        element.innerText = e.user.name;
+
+        usersElement.appendChild(element);
+    })
+
+    .listen('UserUpdated', (e) => {
+        const element = document.getElementById(e.user.id);
+        element.innerText = e.user.name;
+    })
+
+    .listen('UserDeleted', (e) => {
+        const element = document.getElementById(e.user.id);
+        element.parentNode.removeChild(element);
+    })
+</script>
+@endpush
+```
