@@ -819,3 +819,14 @@ Now Open resources/users/showAll.blade.php
 ## 38. Using Your Own WebSockets Server from your Laravel Project
 
 ## 39. Checking the Laravel WebSockets Statistics
+
+
+# Section 10: Deploying Laravel WebSockets on a Server
+
+## 40. Cloning and Deploying the Laravel WebSockets Project
+
+## 41. Using Supervisor to Execute the WebSockets Server
+
+## 42. Configuring a Reversed Proxy for the WebSockets Server
+
+## 43. Using the New Server in the Laravel Realtime Application
