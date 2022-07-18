@@ -47,6 +47,47 @@ php artisan ui bootstrap --auth
 # Section 3: Configuring Laravel to Handle Events and Messages on Realtime
 
 ## 11. Getting Ready to Use Pusher as the Realtime Service on Laravel
+Goto [Pusher](https://pusher.com/) this site create an account and create application.
+Then pusher give application configure necessary resource.
+
+Goto config/broadcasting.php file
+```
+'pusher' => [
+    'driver' => 'pusher',
+    'key' => env('PUSHER_APP_KEY'),
+    'secret' => env('PUSHER_APP_SECRET'),
+    'app_id' => env('PUSHER_APP_ID'),
+    'options' => [
+        'cluster' => env('PUSHER_APP_CLUSTER'),
+        'useTLS' => true,
+    ],
+]
+```
+
+Now oepn .env file & updated by pusher key
+```
+PUSHER_APP_ID=pusher_app_id
+PUSHER_APP_KEY=pusher_app_key
+PUSHER_APP_SECRET=pusher_app_secret
+PUSHER_APP_CLUSTER=us2
+```
+
+Again .env file changed
+```
+BROADCAST_DRIVER=pusher
+```
+
+Finally install php-pusher
+```
+composer require pusher/pusher-php-server
+```
+
+Example Version: ^4.1"
+
+Now goto config/app.php file and enabled 'BroadcastServiceProvider'. by it is comments
+```
+App\Providers\BroadcastServiceProvider::class,
+```
 
 ## 12. Installing and Preparing Laravel Echo to Broadcast Messages
 
@@ -196,7 +237,7 @@ class BroadcastUserLogoutNotification
 }
 ```
 
-Finaly goto app/Providers/EventServiceProvider.php and define Both Listener
+Finally goto app/Providers/EventServiceProvider.php and define Both Listener
 
 ```
 <?php
