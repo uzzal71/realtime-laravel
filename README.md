@@ -45,6 +45,12 @@ You can choose Vuejs, Reactjs Or Others.
 
 ## 9. Compiling Some Required Components Using NPM
 
+Open your application terminal
+```
+npm install
+npm run dev
+```
+
 ## 10. Exploring the Way as Laravel Mix Works in Laravel
 
 ```
