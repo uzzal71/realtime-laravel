@@ -806,3 +806,16 @@ Now Open resources/users/showAll.blade.php
 ## 33. Creating and Broadcasting an Event Using a Private Channel
 
 ## 34. Showing the Private Events Only to the Receiver and Sender
+
+
+# Section 9: Adding, Configuring and Using Your Own WebSockets Server
+
+## 35. Creating a New Laravel Project for The WebSockets Server
+
+## 36. Adding Laravel WebSockets to The Project
+
+## 37. Configuring an Application in the Laravel WebSockets Server
+
+## 38. Using Your Own WebSockets Server from your Laravel Project
+
+## 39. Checking the Laravel WebSockets Statistics
