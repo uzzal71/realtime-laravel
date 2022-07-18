@@ -875,3 +875,26 @@ server {
 ## 45. Generating SSL Certificates for the Laravel WebSockets Server
 
 ## 46. Establishing Secure Connections to the Laravel WebSockets Server
+
+
+# Section 12: Conclusions and Recommendations
+
+## 47. The Essence of the Realtime Application with Laravel
+
+## 48. Bonus Class
+
+## 49. Pending Topics
+
+### Pending Topics
+
+1. Adding, Configuring and Using Your Own WebSockets Server
+
+    1. Creating a New Laravel Project for the WebSockets Server
+
+    2. Adding Laravel WebSockets to the New Project
+
+    3. Configuring an Application on the WebSockets Server with Laravel
+
+    4. Using Your Own WebSockets Server from the Laravel Project
+
+    5. Viewing Laravel WebSockets Statistics
