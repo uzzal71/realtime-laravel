@@ -110,14 +110,18 @@ window.Echo = new Echo({
     broadcaster: 'pusher',
     key: process.env.MIX_PUSHER_APP_KEY,
     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
-    wsHost: '127.0.0.1',
-    wsPort: 6001,
-    encrypted: false,
-    disableStats: true
+    encrypted: true
 });
 ```
 
-By default bootstrap.js file all comments.
+By default bootstrap.js comments this code.
+
+Open your application termial
+```
+npm run dev
+```
+
+Compile bootstrap.js file
 
 # Section 4: Creating Your First Realtime Notifications System with Laravel
 
