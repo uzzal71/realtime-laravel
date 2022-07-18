@@ -773,3 +773,14 @@ Now Open resources/users/showAll.blade.php
 </script>
 @endpush
 ```
+
+
+# Section 6: Creating a Realtime Game with Laravel Echo
+
+## 23. Adding the Visual Components of the Realtime Game
+
+## 24. Creating the Events of the Game to Broadcast
+
+## 25. Creating a Command to Broadcast Game Events on Realtime
+
+## 26. Showing Events to Players in Realtime with Laravel Echo
