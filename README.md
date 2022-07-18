@@ -53,9 +53,44 @@ npm run dev
 
 ## 10. Exploring the Way as Laravel Mix Works in Laravel
 
+Open resources/views/layouts/app.blade.php file
+
+Before closed head tag
+
 ```
-composer require laravel/ui
-php artisan ui bootstrap --auth
+<!-- Styles -->
+<link href="{{ asset('css/app.css') }}" rel="stylesheet">
+@stack("styles")
+```
+
+Before closed body tag
+
+```
+<!-- Scripts -->
+<script src="{{ asset('js/app.js') }}"></script>
+@stack("scripts")
+```
+
+Now resources/views/home.blaade.php copy and paste welcome.blade.php file
+```
+@extends('layouts.app')
+
+@section('content')
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">Welcome</div>
+
+                <div class="card-body">
+                   This is a realtime application
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection
+
 ```
 
 # Section 3: Configuring Laravel to Handle Events and Messages on Realtime
