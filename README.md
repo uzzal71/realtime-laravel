@@ -830,3 +830,48 @@ Now Open resources/users/showAll.blade.php
 ## 42. Configuring a Reversed Proxy for the WebSockets Server
 
 ## 43. Using the New Server in the Laravel Realtime Application
+
+
+# Section 11: Securing the Connections to the Laravel WebSockets Server
+
+## 44. Accepting HTTP Connections for the Laravel WebSockets Project
+```
+server {
+        listen        80;
+        listen        [::]:80;
+
+        server_name ws.supersecuredomain.com;
+        
+        root /var/www/ws.juandmegon.com/public;
+        
+        index index.php;
+
+        location / {
+                try_files $uri $uri/ /index.php?$query_string;
+        }
+
+        location ~ \.php$ {
+                include snippets/fastcgi-php.conf;
+
+                fastcgi_pass unix:/var/run/php/php7.4-fpm.sock;
+        }
+
+        location /app {
+                proxy_pass             http://127.0.0.1:6001;
+                proxy_read_timeout     60;
+                proxy_connect_timeout  60;
+                proxy_redirect         off;
+
+                # Allow the use of websockets
+                proxy_http_version 1.1;
+                proxy_set_header Upgrade $http_upgrade;
+                proxy_set_header Connection 'upgrade';
+                proxy_set_header Host $host;
+                proxy_cache_bypass $http_upgrade;
+        }
+}
+```
+
+## 45. Generating SSL Certificates for the Laravel WebSockets Server
+
+## 46. Establishing Secure Connections to the Laravel WebSockets Server
