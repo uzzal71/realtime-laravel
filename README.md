@@ -53,7 +53,13 @@ php artisan ui bootstrap --auth
 # Section 4: Creating Your First Realtime Notifications System with Laravel
 
 ## 13. Adding a Generic Component to Show Notifications in Laravel
-
+Goto resources/views/layouts/app.blade.php
+```
+<main class="py-4">
+    <div id="notification" class="alert mx-3 invisible"></div>
+    @yield('content')
+</main>
+```
 ## 14. Creating an Event to Notify Users’ Session Changes
 
 ## 15. Using Laravel Listeners to Broadcast Changes on Users’ Session
