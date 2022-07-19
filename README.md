@@ -825,6 +825,39 @@ Now Open resources/users/showAll.blade.php
 
 ## 40. Cloning and Deploying the Laravel WebSockets Project
 
+```
+# Step 01
+-------------------------------------------------------
+cd /var/www
+sudo git clone "" ws.domain.com
+cd ws.domain.com
+sudo chown -R www-data storage/
+sudo chown -R www-data bootstrap/cache/
+sudo nano .env
+
+# Step 02
+---------------------------------------------------------
+# (#copy your project .env file & paste this nano .env#)
+# .env file APP_URL changed
+
+APP_URL=https://ws.domain.com
+Then .env file save
+
+# Step 03
+---------------------------------------------------------
+sudo touch database/database.sqlite
+
+# Step 04
+---------------------------------------------------------
+sudo composer install --no-dev
+
+# Step 05
+---------------------------------------------------------
+sudo php artisan migrate
+> yes
+
+```
+
 ## 41. Using Supervisor to Execute the WebSockets Server
 
 ## 42. Configuring a Reversed Proxy for the WebSockets Server
