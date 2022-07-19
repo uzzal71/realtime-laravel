@@ -855,10 +855,37 @@ sudo composer install --no-dev
 ---------------------------------------------------------
 sudo php artisan migrate
 > yes
-
 ```
 
 ## 41. Using Supervisor to Execute the WebSockets Server
+
+```
+# Step 01
+------------------------------------------------
+> sudo php artisan websockets:serve
+> exit ctrl + c
+> sudo apt install supervisor
+> cd /etc/supervisor
+> ll
+> cd config.d
+> ll
+> sudo nano ws.domain.com.conf
+
+# Step 02
+-------------------------------------------------
+[program:ws_domain]
+command=/usr/bin/php /var/www/ws.domain.com/artisan websockets:serve
+autostart=true
+autorestart=true
+
+# Step 03
+--------------------------------------------------
+> sudo supervisorctl update
+> sudo supervisorctl start ws_domain
+> cd /var/www/ws.domain.com/
+> sudo php artisan websockets:serve
+-> sudo supervisorctl status
+```
 
 ## 42. Configuring a Reversed Proxy for the WebSockets Server
 
