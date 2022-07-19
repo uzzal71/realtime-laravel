@@ -889,12 +889,101 @@ autorestart=true
 
 ## 42. Configuring a Reversed Proxy for the WebSockets Server
 
+```
+# Step 01
+----------------------------------------------
+> cd /etc/nginx/sites-available/
+> ll
+> sudo nano ws.domain.com
+
+# Step 02 Update this file
+-----------------------------------------------
+server {
+        listen        80;
+        listen        [::]:80;
+
+        server_name ws.domain.com;
+
+        location /app {
+                proxy_pass             http://127.0.0.1:6001;
+                proxy_read_timeout     60;
+                proxy_connect_timeout  60;
+                proxy_redirect         off;
+
+                # Allow the use of websockets
+                proxy_http_version 1.1;
+                proxy_set_header Upgrade $http_upgrade;
+                proxy_set_header Connection 'upgrade';
+                proxy_set_header Host $host;
+                proxy_cache_bypass $http_upgrade;
+        }
+}
+
+# Step 03
+--------------------------------------------------------
+> sudo ln -s /etc/nginx/sites-available/ws.domain.com /etc/nginx/sites-enabled/
+> ll ../sites-enabled/
+> sudo nginx -t
+> sudo systemctl reload nginx.service
+
+# Step 04
+---------------------------------------------------------
+Goto you browser: ws.domain.com
+Result Not Found and show nginx server
+```
+
 ## 43. Using the New Server in the Laravel Realtime Application
 
+Goto config/broadcasting.php
+```
+'pusher' => [
+            'driver' => 'pusher',
+            'key' => env('PUSHER_APP_KEY'),
+            'secret' => env('PUSHER_APP_SECRET'),
+            'app_id' => env('PUSHER_APP_ID'),
+            'options' => [
+                'cluster' => env('PUSHER_APP_CLUSTER'),
+                'host'    => 'ws.domain.com',
+                'port'    => 80,
+                'useTLS' => true,
+                'scheme' => 'http'
+            ],
+        ]
+```
+
+Then Goto resources/js/bootstrap.js
+```
+import Echo from 'laravel-echo'
+
+window.Pusher = require('pusher-js');
+
+window.Echo = new Echo({
+    broadcaster: 'pusher',
+    key: process.env.MIX_PUSHER_APP_KEY,
+    cluster: process.env.MIX_PUSHER_APP_CLUSTER,
+    wsHost: 'ws.domain.com',
+    wsPort: 80,
+    encrypted: false,
+    disableStats: true
+});
+
+```
+
+Open you application termial
+```
+npm run dev
+php artisan serve
+```
 
 # Section 11: Securing the Connections to the Laravel WebSockets Server
 
 ## 44. Accepting HTTP Connections for the Laravel WebSockets Project
+
+# Step 01
+--------------------------------------------------
+sudo nano /etc/nginx/sites-available/ws.domain.com
+
+# Step 02
 ```
 server {
         listen        80;
@@ -902,7 +991,7 @@ server {
 
         server_name ws.supersecuredomain.com;
         
-        root /var/www/ws.juandmegon.com/public;
+        root /var/www/ws.domain.com/public;
         
         index index.php;
 
@@ -930,6 +1019,14 @@ server {
                 proxy_cache_bypass $http_upgrade;
         }
 }
+```
+
+save this file
+
+# Step 03
+```
+> suto nginx -t
+> sudo systemctl reload nginx.service
 ```
 
 ## 45. Generating SSL Certificates for the Laravel WebSockets Server
