@@ -1264,6 +1264,40 @@ php artisan serve --port=8001
 
 ## 36. Adding Laravel WebSockets to The Project
 
+Goto this link more details [laravel-websockets](https://beyondco.de/docs/laravel-websockets/getting-started/introduction)
+
+Open your termial
+```
+composer require beyondcode/laravel-websockets
+```
+
+Run it!
+```
+php artisan vendor:publish --provider="BeyondCode\LaravelWebSockets\WebSocketsServiceProvider" --tag="migrations"
+```
+
+Run it!
+```
+php artisan migrate
+```
+
+Next, you need to publish the WebSocket configuration file:
+```
+php artisan vendor:publish --provider="BeyondCode\LaravelWebSockets\WebSocketsServiceProvider" --tag="config"
+```
+
+Then check you application websockets command here
+
+```
+php artisan
+```
+
+Confirm then run it!
+
+```
+php artisan websockets:serve
+```
+
 ## 37. Configuring an Application in the Laravel WebSockets Server
 
 ## 38. Using Your Own WebSockets Server from your Laravel Project
