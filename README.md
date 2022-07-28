@@ -1151,6 +1151,76 @@ public function greetReceived(Request $request, User $user)
 
 ## 33. Creating and Broadcasting an Event Using a Private Channel
 
+Create a event and open it
+```
+php artisan make:event GreetingSent
+```
+
+```
+<?php
+
+namespace App\Events;
+
+use App\User;
+use Illuminate\Broadcasting\Channel;
+use Illuminate\Broadcasting\InteractsWithSockets;
+use Illuminate\Broadcasting\PrivateChannel;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Illuminate\Foundation\Events\Dispatchable;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
+
+class GreetingSent implements ShouldBroadcast
+{
+    use Dispatchable, InteractsWithSockets, SerializesModels;
+
+    protected $user;
+
+    public $message;
+
+    /**
+     * Create a new event instance.
+     *
+     * @return void
+     */
+    public function __construct(User $user, $message)
+    {
+        $this->user = $user;
+        $this->message = $message;
+    }
+
+    /**
+     * Get the channels the event should broadcast on.
+     *
+     * @return \Illuminate\Broadcasting\Channel|array
+     */
+    public function broadcastOn()
+    {
+        Log::debug($this->message);
+
+        return new PrivateChannel("chat.greet.{$this->user->id}");
+    }
+}
+```
+
+Now open routes/chaneels.php
+```
+Broadcast::channel('chat.greet.{receiver}', function ($user, $receiver) {
+    return (int) $user->id === (int) $receiver;
+});
+```
+
+Now open app/Http/Controller/ChatController.php
+```
+public function greetReceived(Request $request, User $user)
+{
+    broadcast(new GreetingSent($user, "{$request->user()->name} greeted you"));
+    broadcast(new GreetingSent($request->user(), "You greeted {$user->name}"));
+    
+    return "Greeting {$user->name} from {$request->user()->name}";
+}
+```
+
 ## 34. Showing the Private Events Only to the Receiver and Sender
 
 
