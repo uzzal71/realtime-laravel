@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\MessageSent;
 use App\Events\GreetingSent;
+use App\Events\MessageSent;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -29,11 +29,6 @@ class ChatController extends Controller
         return view('chat.show');
     }
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
     public function messageReceived(Request $request)
     {
         $rules = [
@@ -51,7 +46,7 @@ class ChatController extends Controller
     {
         broadcast(new GreetingSent($user, "{$request->user()->name} greeted you"));
         broadcast(new GreetingSent($request->user(), "You greeted {$user->name}"));
-        
+
         return "Greeting {$user->name} from {$request->user()->name}";
     }
 }

@@ -58,19 +58,19 @@
 
 @push('scripts')
 <script>
-     const usersElement = document.getElementById('users');
-     const messagesElement = document.getElementById('messages');
-
-     Echo.join('chat')
+    const usersElement = document.getElementById('users');
+    const messagesElement = document.getElementById('messages');
+    
+    Echo.join('chat')
         .here((users) => {
-                users.forEach((user, index) => {
-                    let element = document.createElement('li');
-                    element.setAttribute('id', user.id);
-                    element.setAttribute('onclick', 'greetUser("' + user.id +'")');
-                    element.innerText = user.name;
-                    usersElement.appendChild(element);
-                });
-            })
+            users.forEach((user, index) => {
+                let element = document.createElement('li');
+                element.setAttribute('id', user.id);
+                element.setAttribute('onclick', 'greetUser("' + user.id +'")');
+                element.innerText = user.name;
+                usersElement.appendChild(element);
+            });
+        })
         .joining((user) => {
             let element = document.createElement('li');
             element.setAttribute('id', user.id);
@@ -92,7 +92,6 @@
 <script>
     const messageElement = document.getElementById('message');
     const sendElement = document.getElementById('send');
-    
     sendElement.addEventListener('click', (e) => {
         e.preventDefault();
         window.axios.post('/chat/message', {
@@ -107,5 +106,15 @@
     {
         window.axios.post('/chat/greet/' + id);
     }
+</script>
+
+<script>
+    Echo.private('chat.greet.{{ auth()->user()->id }}')
+        .listen('GreetingSent', (e) => {
+            let element = document.createElement('li');
+            element.innerText = e.message;
+            element.classList.add('text-success');
+            messagesElement.appendChild(element);
+        });
 </script>
 @endpush

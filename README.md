@@ -1223,6 +1223,19 @@ public function greetReceived(Request $request, User $user)
 
 ## 34. Showing the Private Events Only to the Receiver and Sender
 
+Open resources/views/chat/show.blade.php
+
+```
+<script>
+    Echo.private('chat.greet.{{ auth()->user()->id }}')
+        .listen('GreetingSent', (e) => {
+            let element = document.createElement('li');
+            element.innerText = e.message;
+            element.classList.add('text-success');
+            messagesElement.appendChild(element);
+        });
+</script>
+```
 
 # Section 9: Adding, Configuring and Using Your Own WebSockets Server
 
