@@ -1241,6 +1241,27 @@ Open resources/views/chat/show.blade.php
 
 ## 35. Creating a New Laravel Project for The WebSockets Server
 
+```
+composer create-project laravel/laravel WebSocketServer
+```
+
+Open .env file
+```
+APP_URL=http://127.0.0.1:8001
+
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=websocketserver
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+Open your termial
+```
+php artisan serve --port=8001
+```
+
 ## 36. Adding Laravel WebSockets to The Project
 
 ## 37. Configuring an Application in the Laravel WebSockets Server
