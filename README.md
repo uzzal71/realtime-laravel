@@ -1043,7 +1043,7 @@ Now Open resources/views/chat/show.blade.php
 <script>
     const messageElement = document.getElementById('message');
     const sendElement = document.getElementById('send');
-    
+
     sendElement.addEventListener('click', (e) => {
         e.preventDefault();
         window.axios.post('/chat/message', {
@@ -1090,6 +1090,64 @@ Goto to resources/views/chat/show.blade.php file
 # Section 8: Allowing to Send Private Events in Realtime with Laravel Echo
 
 ## 32. Adding Components to Allow Events Between Users
+
+Open resources/views/chat/show.blade.php
+
+
+```
+@extends('layouts.app')
+
+@push('styles')
+<style type="text/css">
+    #users > li {
+        cursor: pointer;
+    }
+</style>
+@endpush
+```
+
+
+```
+<script>
+     const usersElement = document.getElementById('users');
+     const messagesElement = document.getElementById('messages');
+
+     Echo.join('chat')
+        .here((users) => {
+                users.forEach((user, index) => {
+                    element.setAttribute('id', user.id);
+                    element.setAttribute('onclick', 'greetUser("' + user.id +'")');
+            })
+        .joining((user) => {
+            element.setAttribute('id', user.id);
+            element.setAttribute('onclick', 'greetUser("' + user.id +'")');
+        })
+</script>
+```
+
+added javascript function
+
+```
+<script>
+    function greetUser(id)
+    {
+        window.axios.post('/chat/greet/' + id);
+    }
+</script>
+```
+
+Open routes/web.php file
+```
+Route::post('/chat/greet/{user}', 'ChatController@greetReceived')->name('chat.greet');
+```
+
+Open app/Http/Controller/ChatController.php
+```
+public function greetReceived(Request $request, User $user)
+{
+    return "Greeting {$user->name} from {$request->user()->name}";
+}
+```
 
 ## 33. Creating and Broadcasting an Event Using a Private Channel
 

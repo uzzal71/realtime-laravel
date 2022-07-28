@@ -4,7 +4,7 @@ namespace App\Listeners;
 
 use App\Events\UserSessionChanged;
 use Illuminate\Auth\Events\Login;
-
+ 
 class BroadcastUserLoginNotification
 {
     /**

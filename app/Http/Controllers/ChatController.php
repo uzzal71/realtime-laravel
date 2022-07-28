@@ -46,4 +46,9 @@ class ChatController extends Controller
 
         return response()->json('Message broadcast');
     }
+
+    public function greetReceived(Request $request, User $user)
+    {
+        return "Greeting {$user->name} from {$request->user()->name}";
+    }
 }
