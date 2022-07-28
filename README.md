@@ -923,7 +923,6 @@ Open resources/views/chat/show.blade.php
                 users.forEach((user, index) => {
                     let element = document.createElement('li');
                     element.setAttribute('id', user.id);
-                    element.setAttribute('onclick', 'greetUser("' + user.id +'")');
                     element.innerText = user.name;
                     usersElement.appendChild(element);
                 });
@@ -931,7 +930,6 @@ Open resources/views/chat/show.blade.php
         .joining((user) => {
             let element = document.createElement('li');
             element.setAttribute('id', user.id);
-            element.setAttribute('onclick', 'greetUser("' + user.id +'")');
             element.innerText = user.name;
             usersElement.appendChild(element);
         })
@@ -1007,7 +1005,7 @@ class MessageSent implements ShouldBroadcast
     {
         Log::debug("{$this->user->name}: {$this->message}");
         
-        return new PrivateChannel('chat');
+        return new PresenceChannel('chat');
     }
 }
 ```
@@ -1045,6 +1043,7 @@ Now Open resources/views/chat/show.blade.php
 <script>
     const messageElement = document.getElementById('message');
     const sendElement = document.getElementById('send');
+    
     sendElement.addEventListener('click', (e) => {
         e.preventDefault();
         window.axios.post('/chat/message', {
@@ -1062,12 +1061,31 @@ public function broadcastOn()
 {
     // Log::debug("{$this->user->name}: {$this->message}");
     
-    return new PrivateChannel('chat');
+    return new PresenceChannel('chat');
 }
 ```
 
 ## 31. Showing the Broadcasted Messages to All Users
 
+Goto to resources/views/chat/show.blade.php file
+
+```
+<ul
+    id="messages"
+    class="list-unstyled overflow-auto"
+    style="height: 45vh"
+>
+</ul>
+```
+
+```
+......
+.listen('MessageSent', (e) => {
+    let element = document.createElement('li');
+    element.innerText = e.user.name + ': ' + e.message;
+    messagesElement.appendChild(element);
+});
+```
 
 # Section 8: Allowing to Send Private Events in Realtime with Laravel Echo
 
