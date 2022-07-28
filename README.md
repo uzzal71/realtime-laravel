@@ -1014,6 +1014,58 @@ class MessageSent implements ShouldBroadcast
 
 ## 30. Broadcasting the Event Created When Sending a Message
 
+Now, Open routes/web.php file
+
+```
+Route::post('/chat/message', 'ChatController@messageReceived')->name('chat.message');
+```
+
+Now Open ChatController.php file
+
+```
+use App\Events\MessageSent;
+.........
+public function messageReceived(Request $request)
+{
+    $rules = [
+        'message' => 'required',
+    ];
+
+    $request->validate($rules);
+
+    broadcast(new MessageSent($request->user(), $request->message));
+
+    return response()->json('Message broadcast');
+}
+```
+
+Now Open resources/views/chat/show.blade.php
+
+```
+<script>
+    const messageElement = document.getElementById('message');
+    const sendElement = document.getElementById('send');
+    sendElement.addEventListener('click', (e) => {
+        e.preventDefault();
+        window.axios.post('/chat/message', {
+            message: messageElement.value,
+        });
+        messageElement.value = '';
+    });
+</script>
+```
+
+Send message and check log. then checking done remove Log function.
+
+```
+public function broadcastOn()
+{
+    // Log::debug("{$this->user->name}: {$this->message}");
+    
+    return new PrivateChannel('chat');
+}
+```
+
 ## 31. Showing the Broadcasted Messages to All Users
 
 
