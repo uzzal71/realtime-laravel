@@ -47511,7 +47511,7 @@ module.exports = function(module) {
 
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
-Echo["private"]("notifications").listen('UserSessionChanged', function (e) {
+Echo.channel("notifications").listen('UserSessionChanged', function (e) {
   var notificationElement = document.getElementById("notification");
   notificationElement.innerText = e.message;
   notificationElement.classList.remove('invisible');
@@ -47571,6 +47571,7 @@ if (token) {
  * Echo exposes an expressive API for subscribing to channels and listening
  * for events that are broadcast by Laravel. Echo and event broadcasting
  * allows your team to easily build robust real-time web applications.
+ * 50.18.231.224
  */
 
 
@@ -47580,8 +47581,8 @@ window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
   broadcaster: 'pusher',
   key: "Ov6wnjSL6aEVEVkVCwmvtZaAeH5EgeoE",
   cluster: "mt1",
-  wsHost: '127.0.0.1',
-  wsPort: 6001,
+  wsHost: '18.119.51.33',
+  wsPort: 80,
   encrypted: false,
   disableStats: true
 });

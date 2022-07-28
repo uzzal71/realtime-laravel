@@ -13,7 +13,7 @@ return [
     |
     | Supported: "pusher", "redis", "log", "null"
     |
-    */
+    */ 
 
     'default' => env('BROADCAST_DRIVER', 'null'),
 
@@ -25,7 +25,7 @@ return [
     | Here you may define all of the broadcast connections that will be used
     | to broadcast events to other systems or over websockets. Samples of
     | each available type of connection are provided inside this array.
-    |
+    | 50.18.231.224
     */
 
     'connections' => [
@@ -37,9 +37,9 @@ return [
             'app_id' => env('PUSHER_APP_ID'),
             'options' => [
                 'cluster' => env('PUSHER_APP_CLUSTER'),
-                'host'    => '127.0.0.1',
-                'port'    => 6001,
-                'useTLS' => true,
+                'host'    => '18.119.51.33',
+                'port'    => 80,
+                'useTLS' => false,
                 'scheme' => 'http'
             ],
         ],

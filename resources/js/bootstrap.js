@@ -41,6 +41,7 @@ if (token) {
  * Echo exposes an expressive API for subscribing to channels and listening
  * for events that are broadcast by Laravel. Echo and event broadcasting
  * allows your team to easily build robust real-time web applications.
+ * 50.18.231.224
  */
 
 import Echo from 'laravel-echo'
@@ -49,10 +50,10 @@ window.Pusher = require('pusher-js');
 
 window.Echo = new Echo({
     broadcaster: 'pusher',
-    key: process.env.MIX_PUSHER_APP_KEY,
+    key: process.env.MIX_PUSHER_APP_KEY, 
     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
-    wsHost: '127.0.0.1',
-    wsPort: 6001,
+    wsHost: '18.119.51.33',
+    wsPort: 80,
     encrypted: false,
     disableStats: true
 });
