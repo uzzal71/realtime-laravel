@@ -901,6 +901,59 @@ Create show.blade.php in resource/views/chat and open show.blade.php file
 
 ## 28. Managing the List of Connected Users in Realtime
 
+Open resources/views/chat/show.blade.php
+
+```
+<ul
+    id="users"
+    class="list-unstyled overflow-auto text-info"
+    style="height: 45vh"
+>
+
+</ul>
+```
+
+```
+@push('scripts')
+<script>
+     const usersElement = document.getElementById('users');
+
+     Echo.join('chat')
+        .here((users) => {
+                users.forEach((user, index) => {
+                    let element = document.createElement('li');
+                    element.setAttribute('id', user.id);
+                    element.setAttribute('onclick', 'greetUser("' + user.id +'")');
+                    element.innerText = user.name;
+                    usersElement.appendChild(element);
+                });
+            })
+        .joining((user) => {
+            let element = document.createElement('li');
+            element.setAttribute('id', user.id);
+            element.setAttribute('onclick', 'greetUser("' + user.id +'")');
+            element.innerText = user.name;
+            usersElement.appendChild(element);
+        })
+        .leaving((user) => {
+            const element = document.getElementById(user.id);
+            element.parentNode.removeChild(element);
+        })
+</script>
+@endpush
+```
+
+Open routes/chaneels.php file
+
+```
+Broadcast::channel('chat', function ($user) {
+    if ($user != null) {
+        return ['id' => $user->id, 'name' => $user->name];
+    }
+});
+
+```
+
 ## 29. Creating an Event on Sending Messages in the Chat
 
 ## 30. Broadcasting the Event Created When Sending a Message
