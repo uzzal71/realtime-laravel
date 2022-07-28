@@ -956,6 +956,62 @@ Broadcast::channel('chat', function ($user) {
 
 ## 29. Creating an Event on Sending Messages in the Chat
 
+Now create a event
+
+```
+php artisan make:event MessageSent
+```
+
+Now Open app/Events/MessageSent.php
+
+```
+<?php
+
+namespace App\Events;
+
+use App\User;
+use Illuminate\Broadcasting\Channel;
+use Illuminate\Broadcasting\InteractsWithSockets;
+use Illuminate\Broadcasting\PresenceChannel;
+use Illuminate\Broadcasting\PrivateChannel;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Illuminate\Foundation\Events\Dispatchable; 
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
+
+class MessageSent implements ShouldBroadcast
+{
+    use Dispatchable, InteractsWithSockets, SerializesModels;
+
+    public $user;
+
+    public $message;
+
+    /**
+     * Create a new event instance.
+     *
+     * @return void
+     */
+    public function __construct(User $user, $message)
+    {
+        $this->user = $user;
+        $this->message = $message;
+    }
+
+    /**
+     * Get the channels the event should broadcast on.
+     *
+     * @return \Illuminate\Broadcasting\Channel|array
+     */
+    public function broadcastOn()
+    {
+        Log::debug("{$this->user->name}: {$this->message}");
+        
+        return new PrivateChannel('chat');
+    }
+}
+```
+
 ## 30. Broadcasting the Event Created When Sending a Message
 
 ## 31. Showing the Broadcasted Messages to All Users
