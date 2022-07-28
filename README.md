@@ -1300,6 +1300,32 @@ php artisan websockets:serve
 
 ## 37. Configuring an Application in the Laravel WebSockets Server
 
+Goto config/websockets.php
+
+change name only
+
+```
+[
+    'id' => env('PUSHER_APP_ID'),
+    'name' => 'LaravelWebSocket',
+    'key' => env('PUSHER_APP_KEY'),
+    'secret' => env('PUSHER_APP_SECRET'),
+    'path' => env('PUSHER_APP_PATH'),
+    'capacity' => null,
+    'enable_client_messages' => false,
+    'enable_statistics' => true,
+]
+```
+
+Now open .env file
+
+```
+PUSHER_APP_ID=7412588
+PUSHER_APP_KEY=Ov6wnjSL6aEVEVkVCwmvtZaAeH5EgeoE
+PUSHER_APP_SECRET=33K2rdenaXCqUobmLWAJzmcdJaVE2Lao
+PUSHER_APP_CLUSTER=mt1
+```
+
 ## 38. Using Your Own WebSockets Server from your Laravel Project
 
 ## 39. Checking the Laravel WebSockets Statistics
