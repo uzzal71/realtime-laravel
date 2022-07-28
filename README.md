@@ -790,6 +790,115 @@ Now Open resources/users/showAll.blade.php
 
 ## 27. Creating Visual Components to Send Messages in Realtime
 
+First create a ChatController.php file inside app/Http/Controller and open newly crated ChatController
+
+```
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+
+class ChatController extends Controller
+{
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function showChat()
+    {
+        return view('chat.show');
+    }
+}
+```
+
+Now, goto routes/web.php file
+```
+Route::get('/chat', 'ChatController@showChat')->name('chat.show');
+```
+
+Create show.blade.php in resource/views/chat and open show.blade.php file
+
+```
+@extends('layouts.app')
+
+@push('styles')
+<style type="text/css">
+    
+</style>
+@endpush
+
+@section('content')
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">Chat</div>
+                <div class="card-body">
+                   <div class="row p-2">
+                        <div class="col-10">
+                            <div class="row">
+                                <div class="col-12 border rounded-lg p-3">
+                                    <ul
+                                        id="messages"
+                                        class="list-unstyled overflow-auto"
+                                        style="height: 45vh"
+                                    >
+                                        <li>Test 1: Hi</li>
+                                        <li>Test 2: Hello</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            {{-- Message Send Start --}}
+                            <form>
+                                <div class="row py-3">
+                                    <div class="col-10">
+                                        <input id="message" class="form-control" type="text">
+                                    </div>
+                                    <div class="col-2">
+                                        <button id="send" type="submit" class="btn btn-primary btn-block">Send</button>
+                                    </div>
+                                </div>
+                            </form>
+                            {{-- Message Send End --}}
+                        </div> {{-- End Col-10 --}}
+                        <div class="col-2">
+                            <p><strong>Online Now</strong></p>
+                            <ul
+                                id="users"
+                                class="list-unstyled overflow-auto text-info"
+                                style="height: 45vh"
+                            >
+                                <li>Test 1</li>
+                                <li>Test 2</li>
+                            </ul>
+                        </div> {{-- End Col-2 --}}
+                   </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection
+
+@push('scripts')
+<script>
+    
+</script>
+@endpush
+```
+
 ## 28. Managing the List of Connected Users in Realtime
 
 ## 29. Creating an Event on Sending Messages in the Chat

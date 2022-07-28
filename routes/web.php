@@ -11,6 +11,8 @@
 |
 */
 
+use Illuminate\Support\Facades\Auth;
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -22,3 +24,5 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/users', function () {
 	return view('users.showAll');
 })->name('users.all');
+
+Route::get('/chat', 'ChatController@showChat')->name('chat.show');
